@@ -1,6 +1,5 @@
 import pandas as pd
 import mysql.connector
-import questionGen
 
 # 3 - full name, 4 - position, 5 - rating, 7 - worth, 8 - wage, 10 - date of birth, 11 - height, 12 - weight
 # 14 - team name, 15 - league name, 18 - shirt number, 23 - nationality
@@ -72,14 +71,14 @@ def install_data_inDB(path, year):
     mydb.commit()
 
 
-if __name__ == '__main__':
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_15.csv', 2015)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_16.csv', 2016)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_17.csv', 2017)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_18.csv', 2018)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_19.csv', 2019)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_20.csv', 2020)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_21.csv', 2021)
-    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\players_22.csv', 2022)
+if __name__ == 'main':
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_15.csv', 2015)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_16.csv', 2016)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_17.csv', 2017)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_18.csv', 2018)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_19.csv', 2019)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_20.csv', 2020)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_21.csv', 2021)
+    install_data_inDB(r'C:\Users\sadna\Documents\Workshop in Data Management\team03\football_player_game\players_22.csv', 2022)
     mycursor.close()
 

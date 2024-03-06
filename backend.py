@@ -62,6 +62,20 @@ def get_mysql_connector():
     return mysql_connector
 
 
+"""
+def get_mysql_connector():
+    global mysql_connector
+    if mysql_connector is None:
+        mysql_connector = mysql.connector.connect(
+            host="localhost",
+            user="team03",
+            password="0003",
+            database="db03"
+        )
+    return mysql_connector
+"""
+
+
 def login(username, password):
     global user_name
     global user_id
