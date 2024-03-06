@@ -46,6 +46,8 @@ def set_game_team(team):
     row = cursor.fetchone()
     if row is not None:
         g_team_id = row[0]
+        return True
+    return False
 
 
 def get_mysql_connector():

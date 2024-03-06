@@ -85,7 +85,17 @@ def choose_team(difficulty):
 
 
 def start_game(team):
-    backend.set_game_team(team)
+    exist = backend.set_game_team(team)
+    if exist is False:
+        messagebox.showerror("Search Team", "Team do not exist.")
+        clear_root()
+        draw_choose_team()
+        return
+    play_game()
+
+
+def start_game_without_team():
+    clear_root()
     play_game()
 
 
@@ -298,7 +308,6 @@ def draw_filtered_player(name):
     button_search_player.place(x=20, y=20)
 
     result = backend.get_player_by_name(name)
-    print(result)
     if result is None:
         messagebox.showerror("Search Player", "Player do not exist.")
         search_player()
@@ -329,7 +338,7 @@ def draw_choose_team():
     back_font = font.Font(family="Helvetica", size=12, weight="bold")
     button_back = tk.Button(root, text="Back", command=back_to_homepage, width=10, height=1, font=back_font)
     button_play_with_team = tk.Button(root, text="Play with team", command=lambda: start_game(team_name.get()), width=15, height=3)
-    button_play_without_team = tk.Button(root, text="Play without team", command=lambda: start_game(""), width=15, height=3)
+    button_play_without_team = tk.Button(root, text="Play without team", command=lambda: start_game_without_team(), width=15, height=3)
 
     team_name = tk.Entry(root, width=25)
 
