@@ -1,6 +1,6 @@
 import random
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 import backend
 
 from tkinter import font
@@ -124,7 +124,6 @@ def draw_players_by_team(team_name, players, i):
         return
     static, dynamic = backend.get_player_data(players[i])
     draw_player_info(static, dynamic)
-    print(players[i])
 
     i = i + 1
     if i >= len(players):
@@ -140,7 +139,7 @@ def draw_search_players_by_team():
     button_back = tk.Button(root, text="Back", command=back_to_homepage, width=10, height=1, font=back_font)
     button_back.place(x=20, y=20)
 
-    label_team_name = tk.Label(root, text="Team Name:")
+    label_team_name = tk.Label(root, text="Team Name:", font=back_font)
     label_team_name.place(relx=0.5, rely=0.3, anchor="center")
 
     team_name = tk.Entry(root, width=25, font=input_font)
@@ -149,7 +148,7 @@ def draw_search_players_by_team():
     button_search_player = tk.Button(root, text="Search", command=lambda: display_by_team(team_name.get(),
                                                                                           backend.get_team_players(
                                                                                               team_name.get()), 0),
-                                     width=5, height=1)
+                                     width=10, height=1, font=back_font)
     button_search_player.place(relx=0.5, rely=0.6, anchor="center")
 
 
@@ -204,7 +203,7 @@ def draw_random_player():
     static, dynamic = backend.get_player_data(backend.get_random_player())
     draw_player_info(static, dynamic)
 
-    button_next_player = tk.Button(root, text="Next Player", command=random_player, width=13, height=1)
+    button_next_player = tk.Button(root, text="Next Player", command=random_player, width=10, height=1, font=back_font)
     button_next_player.place(relx=0.9, rely=0.8, anchor="center")
 
 
@@ -236,7 +235,6 @@ def draw_play_game():
     button_search_player = tk.Button(root, text="Back", command=end_game, width=10, height=1, font=back_font)
     button_search_player.place(x=20, y=20)
     correct_id, wrong_names = backend.get_answers()
-    print(correct_id)
     static, dynamic = backend.get_player_data(correct_id)
     # difficulty = 0
     details = backend.get_question(static, dynamic)
@@ -318,27 +316,54 @@ def draw_filtered_player(name):
 
 def draw_player_info(static, dynamic):
     bold_font = font.Font(family="Helvetica", size=12, weight="bold")
+    table_font = font.Font(family="Helvetica", size=10, weight="bold")
+    value_font = font.Font(family="Helvetica", size=9)
     static_str = f"Name: {static[1]} Birth:{static[2]} Nationality:{static[3]}"
 
     label_hello = tk.Label(root, text=static_str, font=bold_font)
     label_hello.place(relx=0.5, rely=0.1, anchor="center")
-    rely = 0.2
+    style = ttk.Style(root)
+    style.configure("Treeview.Heading", font=table_font)  # Apply the font to all headings
+
+    tree = ttk.Treeview(root, columns=(
+    "Year", "Position", "Rating", "Height", "Weight", "Worth", "Wage", "Jersey", "Team", "League"))
+
+    # Remove the following line to exclude the "#0" column
+    tree["show"] = "headings"
+
+    tree.heading("Year", text="Year")
+    tree.heading("Position", text="Position")
+    tree.heading("Rating", text="Rating")
+    tree.heading("Height", text="Height")
+    tree.heading("Weight", text="Weight")
+    tree.heading("Worth", text="Worth")
+    tree.heading("Wage", text="Wage")
+    tree.heading("Jersey", text="Jersey")
+    tree.heading("Team", text="Team")
+    tree.heading("League", text="League")
+
+    tree.column("Year", anchor="center", width=50)
+    tree.column("Position", anchor="center", width=110)
+    tree.column("Rating", anchor="center", width=50)
+    tree.column("Height", anchor="center", width=50)
+    tree.column("Weight", anchor="center", width=50)
+    tree.column("Worth", anchor="center", width=70)
+    tree.column("Wage", anchor="center", width=50)
+    tree.column("Jersey", anchor="center", width=50)
+    tree.column("Team", anchor="center", width=180)
+    tree.column("League", anchor="center", width=180)
+    tree.tag_configure("value_font", font=value_font)
+    tree.place(relx=0.5, rely=0.4, anchor="center")
 
     for i in dynamic:
-        dynamic_text = f"Year : {i[2]}    Position : {i[3]}   Rating : {i[4]}   Height : {i[5]}   Weight : {i[6]} \n" \
-                       f"Worth : {i[7]}   Wage : {i[8]}   Jersey : {i[9]}\n " \
-                       f"Team : {i[10]}   League : {i[11]}"
-
-        label_dynamic = tk.Label(root, text=dynamic_text)
-        label_dynamic.place(relx=0.5, rely=rely, anchor="center")
-        rely += 0.1
+        tree.insert("", "end", values=(i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11]), tags=("value_font",))
 
 
 def draw_choose_team():
     back_font = font.Font(family="Helvetica", size=12, weight="bold")
     button_back = tk.Button(root, text="Back", command=back_to_homepage, width=10, height=1, font=back_font)
-    button_play_with_team = tk.Button(root, text="Play with team", command=lambda: start_game(team_name.get()), width=15, height=3)
-    button_play_without_team = tk.Button(root, text="Play without team", command=lambda: start_game_without_team(), width=15, height=3)
+    button_play_with_team = tk.Button(root, text="Play with team", command=lambda: start_game(team_name.get()), width=15, height=3, font=back_font)
+    button_play_without_team = tk.Button(root, text="Play without team", command=lambda: start_game_without_team(), width=15, height=3, font=back_font)
 
     team_name = tk.Entry(root, width=25)
 
@@ -388,10 +413,6 @@ def draw_register_page():
 if __name__ == "__main__":
     backend.check()
     root = create_root()
-    p = backend.get_team_players("FC Bayern München")
-    print(p)
-    n = backend.get_player_by_name("Jan Oblak")
-    print(n)
     draw_login_page()
     root.mainloop()
 

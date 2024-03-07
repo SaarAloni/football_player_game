@@ -13,6 +13,7 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
+
 def install_data_inDB(path, year):
     columns_to_extract = [2, 4, 5, 7, 8, 10, 11, 12, 14, 15, 18, 23]
     player_query = "INSERT INTO player (full_name, date_of_birth, nationality) VALUES (%s, %s, %s)"
