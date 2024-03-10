@@ -355,6 +355,8 @@ def draw_player_info(static, dynamic):
     tree.tag_configure("value_font", font=value_font)
     tree.place(relx=0.5, rely=0.4, anchor="center")
 
+    dynamic.sort(key=lambda x: int(x[2]))
+
     for i in dynamic:
         tree.insert("", "end", values=(i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11]), tags=("value_font",))
 

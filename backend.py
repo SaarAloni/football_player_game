@@ -151,7 +151,7 @@ def get_team_players(team_name):
 
 def get_player_max_score():
     cursor = get_mysql_connector().cursor()
-    cursor.execute(f"SELECT max(score) FROM games as g, play as p, user as u where u.username = '{get_user_id()}' "
+    cursor.execute(f"SELECT max(score) FROM games as g, play as p where p.name = '{get_user_id()}' "
                    f"and g.id = p.game_id;")
     row = (cursor.fetchone())[0]
     if row is None:
